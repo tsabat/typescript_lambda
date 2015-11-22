@@ -4,7 +4,7 @@ Lambda](http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events-cr
 to run it.
 
 At the moment, we're stuck on [this issue](#issues) which prevents us from using
-React.  Any contributions would be happly accepted.
+React.  Any contributions would be happily accepted.
 
 
 ## Install
@@ -15,7 +15,7 @@ npm install
 
 ## Run
 
-To run this with a default, passing bit of TypeScript, just run
+The most basic run is without arguments.  This will render so valid TypeScript
 
 ```
 ./run_locally.js
