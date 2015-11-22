@@ -1,44 +1,48 @@
 /* globals require, module, exports ts*/
 
-var TypeScriptSimple = require('typescript-simple').TypeScriptSimple;
+/*
+ * CodePen's lambda implementation of TypeScript.  Depends on node module
+ * typescript-simple.  Read about that here:
+ *
+ * https://github.com/teppeis/typescript-simple
+ *
+ * Unlike other preprocessors, TypeScript does not have a `.compile` method
+ * leaving us to ugly hacks like this one.
+ *
+ * This module is in the format required by AWS Lambda.  Read about it here:
+ *
+ * http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events-create-test-function.html
+ *
+ */
+
+// Target: ES5
 // https://github.com/Microsoft/TypeScript/blob/v1.5.0-beta/bin/typescriptServices.d.ts#L1118
+var TypeScriptSimple = require("typescript-simple").TypeScriptSimple;
 var tss = new TypeScriptSimple({target: 1, noImplicitAny: true});
 
 exports.handler = function(event, context) {
   try {
+    // don't allow `undefined` to creep in.
     var js = event.markup || "";
     if (js === "") {
-      context.succeed( {"markup": "" } );
-    } else {
-      // this value was just increased until we exceeded the limit
-      // this provides dubious security because any of these files
-      // could be closed at any time.
-      //var limit = 13;
-      //posix.setrlimit("nofile", {soft: limit, hard: limit});
-      var rslt = tss.compile(js);
-      context.succeed( {"markup": rslt } );
+      // bail on empty markup
+      return context.succeed( {"markup": "" } );
     }
+
+    var rslt = tss.compile(js);
+    context.succeed( {"markup": rslt } );
   } catch(e) {
 
-    console.log(e.type);
+    var line = 0;
+    var message = "Error finding line number.  Please Contact CodePen Support";
 
-    console.log('start');
-    for(var i=0; i<0; i++) {
-      console.log(e[i]);
-    }
-    console.log('end');
-
-    var line = 100;
-
-    try {
-      // Coffescript line numbers start at 0. Geezus
-      line = e.file.pos;
-    } catch(err) {
-      // go on with line number 1
+    var match = e.stack.match(/Error: L(\d+): (.+)/);
+    if (match && match.length >= 2) {
+      line    = match[1];
+      message = match[2];
     }
 
-    var msg = (typeof(e) === "object") ? e.messageText + " TS" + e.code : e;
-    context.succeed( { "error": msg, "line": line } );
+    context.succeed( { "error": message, "line": parseInt(line) + 1} );
   }
 
 };

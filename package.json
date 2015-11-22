@@ -1,8 +1,7 @@
 {
-  "name": "typescript",
-  "version": "0.0.3",
+  "name": "cp-typescript",
+  "version": "0.0.4",
   "dependencies": {
-    "posix": "2.0.1",
     "typescript-simple": "^3.0.2"
   }
 }
