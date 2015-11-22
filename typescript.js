@@ -33,9 +33,9 @@ exports.handler = function(event, context) {
     var error = errors[0];
     var line = 1;
     for (var i = 0, length = js.length; i < error.start; i++) {
-	  if (js.charAt(i) == '\n') {
+      if (js.charAt(i) == '\n') {
         line++;
-	  }
+      }
     }
     return context.succeed( { "error": error.messageText, "line": line} );
   }
