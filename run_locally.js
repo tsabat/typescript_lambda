@@ -6,7 +6,8 @@
 /* globals require process */
 
 var fs = require("fs"),
-    less = require(process.cwd() + "/typescript.js");
+    less = require(process.cwd() + "/typescript.js"),
+    fs = require("fs");
 
 /* you can view failing typescript by adding `failing` as a command-line arg
  * to this file, like so:
@@ -15,9 +16,18 @@ var fs = require("fs"),
  * ./run_locally.js failing
  * ```
  */
-var markup = "class TSC { awesome: boolean = true; }";
-if (process.argv[2] == "failing") {
-  markup = "\n\nvar n: number = 'str';";
+
+function markupFromDisk (type) {
+  return fs.readFileSync("./markup/" + type, "utf8");
+}
+
+var userDefinedFile = process.argv[2];
+
+var markup = "";
+if (userDefinedFile) {
+  markup = markupFromDisk(userDefinedFile);
+} else {
+  markup = markupFromDisk("valid_typescript");
 }
 
 var event = {

@@ -16,9 +16,9 @@
  */
 
 // Target: ES5
-// https://github.com/Microsoft/TypeScript/blob/v1.5.0-beta/bin/typescriptServices.d.ts#L1118
+// https://github.com/Microsoft/TypeScript/blob/release-1.6/lib/typescriptServices.d.ts
 var TypeScriptSimple = require("typescript-simple").TypeScriptSimple;
-var tss = new TypeScriptSimple({target: 1, noImplicitAny: true});
+var tss = new TypeScriptSimple({target: 1, noImplicitAny: true, jsx: 2});
 
 exports.handler = function(event, context) {
   try {

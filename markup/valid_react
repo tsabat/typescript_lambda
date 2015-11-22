@@ -1,0 +1,16 @@
+
+var HelloButton extends React.Component {
+  testCallback() {
+    alert("hello!");
+  }
+
+  render() {
+    return (
+      <button onClick={this.testCallback}> Click me! </button>
+    );
+  }
+}
+
+React.render(
+  <HelloButton />,
+  document.getElementById('mount-point'));
