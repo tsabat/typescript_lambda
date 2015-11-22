@@ -2,6 +2,6 @@
   "name": "cp-typescript",
   "version": "0.0.4",
   "dependencies": {
-    "typescript-simple": "^3.0.2"
+    "ntypescript": "^1.201511220604.1"
   }
 }

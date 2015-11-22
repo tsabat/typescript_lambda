@@ -1,5 +1,5 @@
 
-var HelloButton extends React.Component {
+class HelloButton extends React.Component {
   testCallback() {
     alert("hello!");
   }
